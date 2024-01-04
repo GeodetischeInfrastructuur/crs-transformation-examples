@@ -24,7 +24,6 @@ Working with CRSs and implementing these can be tricky. By showing this layering
 
 The `proj.db` is a technical representation of the EPSG dataset. The `proj.db` is used by PROJ to implement these defined operations, making it possible to transform coordinates between CRSs. This makes the`proj.db` the first technical component available that can be modified. Other applications also leverage PROJ (and thus `proj.db`) for CRS handling and transformations (i.e. [QGIS](https://qgis.org/), [Mapserver](https://mapserver.org/), etc.). So if you want to change the CRS handling and transformations of these applications, then updating the `proj.db` would be the preferred technical solution.
 
-
 > **example**
 >
 > ```bash
