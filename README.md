@@ -101,3 +101,14 @@ For demo purposes we also host this coordinate transformation API on the followi
 > 1. implement the modified proj.db in the used PROJ environment
 
 1. [OpenAPI Specification](https://api.transformation.nsgi.nl/v2/openapi?f=html)
+
+## API Conformance
+
+The coordinate transformation api conformance to the following specification:
+
+| spec | compliance |
+| --- | --- |
+| OGC-API-Common | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/OGC-API-Common.md) |
+| OGC-API-Features CRS | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/OGC-API-Features-CRS.md) |
+| NL-API | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/NL-API.md) |
+| KP-API geospatial | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/KP-API-geospatial.md) |
