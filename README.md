@@ -104,7 +104,7 @@ For demo purposes, we also host this Coordinate Transformation API on the follow
 
 ## API Conformance
 
-The Coordinate Transformation API conforms to the following specification:
+The Coordinate Transformation API conforms to certain degree to the following specification:
 
 | spec | compliance |
 | --- | --- |
@@ -112,3 +112,5 @@ The Coordinate Transformation API conforms to the following specification:
 | OGC-API-Features CRS | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/OGC-API-Features-CRS.md) |
 | NL-API | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/NL-API.md) |
 | KP-API geospatial | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/KP-API-geospatial.md) |
+
+> :warning: The coordinate transformation API only transforms user input and doendoesn't contain something like a 'state'. It therefor doesn't conform to a traditional data object or feature collection API (like OGC API features), on which these specs (above) are primarily focussed. So specification requirements or recommandations focussen on certain type of query parameters cannot be applied. Reasoning to including these reports regarding compliance (at least our current assumption) is that this can/will be used in environments that so implement those kind of API's. Having these reports will highlight the differences and similarities between the API's
