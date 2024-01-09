@@ -10,7 +10,7 @@ The goal of this GitHub organisation and the repositories associated with it is 
 
 The image below shows the relevant relations that are there between the Dutch CRSs and the international CRSs. For the most accurate transformation of coordinates that are with the Netherlands from a Dutch CRS to an international CRS (and vice versa). Defining these relations by making specific transformation rules within `proj.db` enables users to transform coordinates within the bounds of the European Netherlands, including the Exclusive Economic Zones in a more accurate way.
 
-![relations](supported-transformation-nsgi.drawio.svg)
+![relations](https://raw.githubusercontent.com/GeodetischeInfrastructuur/transformations/main/supported-transformations-nsgi.drawio.svg)
 
 ## Products
 
