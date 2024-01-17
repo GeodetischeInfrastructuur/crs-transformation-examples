@@ -113,14 +113,13 @@ The Coordinate Transformation API conforms to certain degree to the following sp
 | NL-API | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/NL-API.md) |
 | KP-API geospatial | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/KP-API-geospatial.md) |
 
-> :warning: The coordinate transformation API only transforms user input and doendoesn't contain something like a 'state'. It therefor doesn't conform to a traditional data object or feature collection API (like OGC API features), on which these specs (above) are primarily focussed. So specification requirements or recommandations focussen on certain type of query parameters cannot be applied. Reasoning to including these reports regarding compliance (at least our current assumption) is that this can/will be used in environments that so implement those kind of API's. Having these reports will highlight the differences and similarities between the API's
-
+> :warning: The coordinate transformation API only transforms user input and doesn't contain something like a 'state'. It therefor doesn't conform to a traditional data object or feature collection API (like OGC API features), on which these specs (above) are primarily focussed. So specification requirements or recommandations focussen on certain type of query parameters cannot be applied. Reasoning to including these reports regarding compliance (at least our current assumption) is that this can/will be used in environments that so implement those kind of API's. Having these reports will highlight the differences and similarities between the API's
 
 ## Examples
 
 ### QGIS
 
-The following instructions are for configuring QGIS on Windows to use the modified `proj.db` by GeodetischeInfrastructuur. 
+The following instructions are for configuring QGIS on Windows to use the modified `proj.db` by GeodetischeInfrastructuur.
 
 Steps:
 
@@ -130,7 +129,7 @@ Steps:
 import pyproj;print(pyproj.datadir.get_data_dir())
 ```
 
-2. Close QGIS and download the modified `proj.db` and correction grids with the following powershell script (run in an powershell console with elevated privileges):
+1. Close QGIS and download the modified `proj.db` and correction grids with the following powershell script (run in an powershell console with elevated privileges):
 
 ```powershell
 $PROJ_DIR = XXXX  # use the proj data directory path obtained at step 1
@@ -143,7 +142,7 @@ $proj_db_url=Invoke-Webrequest -uri $asset_url | ConvertFrom-Json | Select -Expa
 invoke-webrequest -uri $proj_db_url -outfile "$PROJ_DIR\proj.db"
 ```
 
-3. Verify if QGIS is using the modified `proj.db`. Run the following Python script in the QGIS console, the output should read: *`proj db is configured correctly`*:
+1. Verify if QGIS is using the modified `proj.db`. Run the following Python script in the QGIS console, the output should read: _`proj db is configured correctly`_:
 
 ```py
 from pyproj import CRS, Transformer
