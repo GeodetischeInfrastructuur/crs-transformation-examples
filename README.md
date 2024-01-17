@@ -114,3 +114,52 @@ The Coordinate Transformation API conforms to certain degree to the following sp
 | KP-API geospatial | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/KP-API-geospatial.md) |
 
 > :warning: The coordinate transformation API only transforms user input and doendoesn't contain something like a 'state'. It therefor doesn't conform to a traditional data object or feature collection API (like OGC API features), on which these specs (above) are primarily focussed. So specification requirements or recommandations focussen on certain type of query parameters cannot be applied. Reasoning to including these reports regarding compliance (at least our current assumption) is that this can/will be used in environments that so implement those kind of API's. Having these reports will highlight the differences and similarities between the API's
+
+
+## Examples
+
+### QGIS
+
+The following instructions are for configuring QGIS on Windows to use the modified `proj.db` by GeodetischeInfrastructuur. 
+
+Steps:
+
+1. Obtain PROJ data directory path: run following Python code from the QGIS Python console and copy paste the output:
+
+```python
+import pyproj;print(pyproj.datadir.get_data_dir())
+```
+
+2. Close QGIS and download the modified `proj.db` and correction grids with the following powershell script (run in an powershell console with elevated privileges):
+
+```powershell
+$PROJ_DIR = XXXX  # use the proj data directory path obtained at step 1
+cp $PROJ_DIR\proj.db $PROJ_DIR\proj.db.bak # backup original proj.db
+invoke-webrequest -uri https://cdn.proj.org/nl_nsgi_nlgeo2018.tif -outfile "$PROJ_DIR\nl_nsgi_nlgeo2018.tif"
+invoke-webrequest -uri https://cdn.proj.org/nl_nsgi_rdcorr2018.tif -outfile "$PROJ_DIR\nl_nsgi_rdcorr2018.tif"
+invoke-webrequest -uri https://cdn.proj.org/nl_nsgi_rdtrans2018.tif -outfile "$PROJ_DIR\nl_nsgi_rdtrans2018.tif"
+$asset_url=Invoke-Webrequest -uri https://api.github.com/repos/GeodetischeInfrastructuur/transformations/releases/latest | ConvertFrom-Json | select -Expand assets | where-object { $_.name -eq 'proj.db'} | Select -ExpandProperty "url"
+$proj_db_url=Invoke-Webrequest -uri $asset_url | ConvertFrom-Json | Select -ExpandProperty "browser_download_url"
+invoke-webrequest -uri $proj_db_url -outfile "$PROJ_DIR\proj.db"
+```
+
+3. Verify if QGIS is using the modified `proj.db`. Run the following Python script in the QGIS console, the output should read: *`proj db is configured correctly`*:
+
+```py
+from pyproj import CRS, Transformer
+in_crs=CRS.from_epsg(7931)
+out_crs=CRS.from_epsg(28992)
+t=Transformer.from_crs(in_crs, out_crs, always_xy=True)
+input_point = (5,52, 43)
+expected_output_point = (128410.0958, 445806.496, 43.0)
+output_point=tuple(map(lambda x: float("{:.4f}".format(x)),t.transform(*input_point)))
+assert output_point == expected_output_point, f"expected output is {expected_output_point}, was {output_point}"
+print("proj db is configured correctly")
+```
+
+> **NOTE:** the original `proj.db` file can be restored by running the following in an elevated powershell console:
+
+```powershell
+$PROJ_DIR = XXXX  # use the proj data directory path obtained at step 1
+cp $PROJ_DIR\proj.db.bak$ PROJ_DIR\proj.db # restore backup
+```
