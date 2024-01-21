@@ -1,6 +1,6 @@
 # NSGI coordinate reference system transformation examples
 
-The [NSGI](https://www.nsgi.nl/) is responsible for the CRS (coordinate reference system) of the Netherlands and their relations with international CRSs. The NSGI also gives advices and guidance about the usage of these CRSs. A large part of these are documented in the Guidance document (in: Dutch) ["Handreiking Gebruik coordinaatreferentiesystemen bij uitwisseling en visualisatie van geo-informatie"](https://docs.geostandaarden.nl/crs/crs/) and the [EPSG repository](https://epsg.org/home.html).
+The [NSGI](https://www.nsgi.nl/) is responsible for the CRS (coordinate reference system) of the Netherlands and their relations with international CRSs. The NSGI also gives advices and guidance about the usage of these CRSs. he Guidance document (in: Dutch) ["Handreiking Gebruik coordinaatreferentiesystemen bij uitwisseling en visualisatie van geo-informatie"](https://docs.geostandaarden.nl/crs/crs/) and the [EPSG repository](https://epsg.org/home.html) has documented the advices and guidelines that are relevant for exchange and visualisation of geo information.
 
 ## Goal
 
@@ -8,7 +8,7 @@ The goal of this GitHub organisation and the repositories associated with it is 
 
 ## Relations
 
-The image below shows the relevant relations that are there between the Dutch CRSs and the international CRSs. For the most accurate transformation of coordinates that are with the Netherlands from a Dutch CRS to an international CRS (and vice versa). Defining these relations by making specific transformation rules within `proj.db` enables users to transform coordinates within the bounds of the European Netherlands, including the Exclusive Economic Zones in a more accurate way.
+The image below shows the relevant relations between the Dutch and international CRSs.The transfornmation path between these CRs can be ambiguous and dependendt on the use case, espeocially for trasnformations between international and dymanic CRSs. NSGI has recommendations for the paths within the Netherlands. Defining these relations by making specific transformation rules within `proj.db` enables users to transform coordinates within the bounds of the European Netherlands, including the Exclusive Economic Zones in a more accurate and conistent way.
 
 ![relations](https://raw.githubusercontent.com/GeodetischeInfrastructuur/transformations/main/supported-transformations-nsgi.drawio.svg)
 
@@ -37,6 +37,8 @@ The modified `proj.db` is available to download through _github.com_ as:
 1. [Release download](https://github.com/GeodetischeInfrastructuur/transformations/releases)
 
 ### :mag: Geodense
+
+A straight line in reality is usually not a straight line in a CRSs, the deflection in the CRS dependents on the location, orientation, lenght of line segments and the projection used for visualisations or computations. The deflection can cause incosistency between the same data in different CRSs or compared to reality. To avoid topology issues line segments can be densified.
 
 Geodense is used to check density and densify `LINESTRING` and `POLYGON` GeoJSON geometries. In other words, this tool can be used to check 'straightness' of a line and introduce new points to compensated for possible deviations that might occur when such a geometry is transformed from a cartographic to a geographic projection (and vice versa). It pre-processes certain geometry types so they are better suited for transformation.
 
