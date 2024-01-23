@@ -1,6 +1,6 @@
 # NSGI coordinate reference system transformation examples
 
-The [NSGI](https://www.nsgi.nl/) is responsible for the CRS (coordinate reference system) of the Netherlands and their relations with international CRSs. The NSGI also gives advices and guidance about the usage of these CRSs. he Guidance document (in: Dutch) ["Handreiking Gebruik coordinaatreferentiesystemen bij uitwisseling en visualisatie van geo-informatie"](https://docs.geostandaarden.nl/crs/crs/) and the [EPSG repository](https://epsg.org/home.html) has documented the advices and guidelines that are relevant for exchange and visualisation of geo information.
+The [NSGI](https://www.nsgi.nl/) is responsible for the CRS (coordinate reference system) of the Netherlands and their relations with international CRSs. The NSGI also gives advices and guidance about the usage of these CRSs. The Guidance document (in: Dutch) ["Handreiking Gebruik coordinaatreferentiesystemen bij uitwisseling en visualisatie van geo-informatie"](https://docs.geostandaarden.nl/crs/crs/) and the [EPSG repository](https://epsg.org/home.html) has documented the advices and guidelines that are relevant for exchange and visualisation of geo information.
 
 ## Goal
 
@@ -8,7 +8,7 @@ The goal of this GitHub organisation and the repositories associated with it is 
 
 ## Relations
 
-The image below shows the relevant relations between the Dutch and international CRSs.The transfornmation path between these CRs can be ambiguous and dependendt on the use case, espeocially for trasnformations between international and dymanic CRSs. NSGI has recommendations for the paths within the Netherlands. Defining these relations by making specific transformation rules within `proj.db` enables users to transform coordinates within the bounds of the European Netherlands, including the Exclusive Economic Zones in a more accurate and conistent way.
+The image below shows the relevant relations between the Dutch and international CRSs. The transformation path between these CRs can be ambiguous and dependent on the use case, especially for transformations between international and dynamic CRSs. NSGI has recommendations for the paths within the Netherlands. Defining these relations by making specific transformation rules within `proj.db` enables users to transform coordinates within the bounds of the European Netherlands, including the Exclusive Economic Zones in a more accurate and consistent way.
 
 ![relations](https://raw.githubusercontent.com/GeodetischeInfrastructuur/transformations/main/supported-transformations-nsgi.drawio.svg)
 
@@ -38,7 +38,7 @@ The modified `proj.db` is available to download through _github.com_ as:
 
 ### :mag: Geodense
 
-A straight line in reality is usually not a straight line in a CRSs, the deflection in the CRS dependents on the location, orientation, lenght of line segments and the projection used for visualisations or computations. The deflection can cause incosistency between the same data in different CRSs or compared to reality. To avoid topology issues line segments can be densified.
+A straight line in reality is usually not a straight line in a CRSs, the deflection in the CRS dependents on the location, orientation, length of line segments and the projection used for visualisations or computations. The deflection can cause inconsistency between the same data in different CRSs or compared to reality. To avoid topology issues line segments can be densified.
 
 Geodense is used to check density and densify `LINESTRING` and `POLYGON` GeoJSON geometries. In other words, this tool can be used to check 'straightness' of a line and introduce new points to compensated for possible deviations that might occur when such a geometry is transformed from a cartographic to a geographic projection (and vice versa). It pre-processes certain geometry types so they are better suited for transformation.
 
@@ -72,7 +72,7 @@ Geodense is available as:
 
 ### :computer: Coordinate Transformation API
 
-> :warning: The Coordinate Transformation API makes use of pyproj. Pyproj has it's own PROJ 'buildin' that needs to be updated. By default this can be found `/usr/local/lib/python3.11/site-packages/pyproj/proj_dir/share/proj/proj.db`.
+> :warning: The Coordinate Transformation API makes use of pyproj. Pyproj has it's own PROJ 'build in' that needs to be updated. By default this can be found `/usr/local/lib/python3.11/site-packages/pyproj/proj_dir/share/proj/proj.db`.
 
 The [coordinate-transformation-api](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api) is written in Python where the modified `proj.db` and Geodense are used together with specific code to create an API that will transform certain CRS and is focused on the European Netherlands including the Exclusive Economic Zones.
 
@@ -115,7 +115,7 @@ The Coordinate Transformation API conforms to certain degree to the following sp
 | NL-API | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/NL-API.md) |
 | KP-API geospatial | [report](https://github.com/GeodetischeInfrastructuur/coordinate-transformation-api/blob/main/docs/KP-API-geospatial.md) |
 
-> :warning: The coordinate transformation API only transforms user input and doesn't contain something like a 'state'. It therefor doesn't conform to a traditional data object or feature collection API (like OGC API features), on which these specs (above) are primarily focussed. So specification requirements or recommandations focussen on certain type of query parameters cannot be applied. Reasoning to including these reports regarding compliance (at least our current assumption) is that this can/will be used in environments that so implement those kind of API's. Having these reports will highlight the differences and similarities between the API's
+> :warning: The coordinate transformation API only transforms user input and doesn't contain something like a 'state'. It therefor doesn't conform to a traditional data object or feature collection API (like OGC API features), on which these specs (above) are primarily focussed. So specification requirements or recommendations focussed on certain type of query parameters cannot be applied. Reasoning to including these reports regarding compliance (at least our current assumption) is that this can/will be used in environments that so implement those kind of API's. Having these reports will highlight the differences and similarities between the API's
 
 ## Examples
 
@@ -131,7 +131,7 @@ Steps:
     import pyproj;print(pyproj.datadir.get_data_dir())
     ```
 
-1. Close QGIS and download the modified `proj.db` and correction grids with the following Powershell or Bash script (run in console/terminal with elevated privileges):
+1. Close QGIS and download the modified `proj.db` and correction grids with the following PowerShell or Bash script (run in console/terminal with elevated privileges):
 
     ```powershell
     # powershell script
@@ -174,5 +174,3 @@ Steps:
 > $PROJ_DIR = XXXX  # use the proj data directory path obtained at step 1
 > cp $PROJ_DIR\proj.db.bak$ PROJ_DIR\proj.db # restore backup
 > ```
-
-
