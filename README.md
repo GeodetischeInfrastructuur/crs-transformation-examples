@@ -154,19 +154,60 @@ Steps:
     curl -sL -H "Accept: application/octet-stream" $(curl -s "https://api.github.com/repos/GeodetischeInfrastructuur/transformations/releases/latest" | jq -r '.assets[] | select(.name=="proj.db").url') -o "${PROJ_DATA_DIR}/proj.db"
     ```
 
-1. Verify if QGIS is using the modified `proj.db`. Run the following Python script in the QGIS console, the output should read: _`proj db is configured correctly`_:
+1. Synchronize the QGIS CRS database with the PROJ database with the following Batch or Bash script (run in console/terminal with elevated privileges). To start terminal session on Linux with maintaining current environment variables run `sudo -E su`:
 
-    ```py
-    from pyproj import CRS, Transformer
-    in_crs=CRS.from_epsg(7931)
-    out_crs=CRS.from_epsg(28992)
-    t=Transformer.from_crs(in_crs, out_crs, always_xy=True)
-    input_point = (5,52, 43)
-    expected_output_point = (128410.0958, 445806.496, 43.0)
-    output_point=tuple(map(lambda x: float("{:.4f}".format(x)),t.transform(*input_point)))
-    assert output_point == expected_output_point, f"expected output is {expected_output_point}, was {output_point}"
-    print("proj db is configured correctly")
+    ```bat
+    @echo off
+    @rem "set QGIS_DIR to path of your qgis installation"
+
+    set QGIS_DIR=C:\Program Files\QGIS 3.34.2
+    call "%QGIS_DIR%\bin\o4w_env.bat"
+
+    set QGIS_PREFIX_PATH=%QGIS_DIR%\apps\qgis
+    copy "%QGIS_PREFIX_PATH%\resources\srs.db" "%QGIS_PREFIX_PATH%\resources\srs.db.bak"
+    copy "%QGIS_PREFIX_PATH%\resources\qgis.db" "%QGIS_PREFIX_PATH%\resources\srs.db"
+    set path=%QGIS_DIR%\bin;%QGIS_PREFIX_PATH%\bin;%path%
+
+    "%QGIS_PREFIX_PATH%\crssync.exe" --verbose
     ```
+
+    ```bash
+    export QGIS_PREFIX_PATH=/usr
+    export PROJ_LIB=$(python3 -c "import pyproj;print(pyproj.datadir.get_data_dir())") # should be /usr/share/proj
+    QGIS_RESOURCES=/usr/share/qgis/resources
+    cp $QGIS_RESOURCES/srs.db $QGIS_RESOURCES/srs.db.bak
+    cp $QGIS_RESOURCES/qgis.db $QGIS_RESOURCES/srs.db
+    /usr/lib/qgis/crssync --verbose
+    ```
+
+    The program `crssync` should print with a return code of `0`:
+
+    ```txt
+    Synchronizing CRS database with GDAL/PROJ definitions.
+    13458 CRSs updated.
+    ```
+
+
+1. Verify if QGIS is using the modified `proj.db`. 
+
+    1. Run the following Python script in the QGIS console, the output should read: _`proj db is configured correctly`_:
+
+        ```py
+        from pyproj import CRS, Transformer
+        in_crs=CRS.from_epsg(7931)
+        out_crs=CRS.from_epsg(28992)
+        t=Transformer.from_crs(in_crs, out_crs, always_xy=True)
+        input_point = (5,52, 43)
+        expected_output_point = (128410.0958, 445806.496, 43.0)
+        output_point=tuple(map(lambda x: float("{:.4f}".format(x)),t.transform(*input_point)))
+        assert output_point == expected_output_point, f"expected output is {expected_output_point}, was {output_point}"
+        print("proj db is configured correctly")
+        ```
+
+    1. QGIS should also show multiple CRSs with the authority `NSGI` in the __Project Properties - CRS__ window:
+
+        ![Alt text](nsgi-crs-qgis.png)
+
 
 > **NOTE:** the original `proj.db` file can be restored by running the following (in an elevated Powershell console):
 >
