@@ -93,11 +93,11 @@ A Docker image to run your own Coordinate Transformation API, as a backend servi
 
 ### :globe_with_meridians: Coordinate Transformation API
 
-We also host this Coordinate Transformation API on the following URL: [`https://api.transformation.nsgi.nl/v2/`](https://api.transformation.nsgi.nl/v2/). This can be used for datasets of limited size and should not be used for large amouts of data or when high availability is required.
+We also host this Coordinate Transformation API on the following URL: [`https://api.transformation.nsgi.nl/v2/`](https://api.transformation.nsgi.nl/v2/). This can be used for datasets of limited size.
 
 > **example**
 >
-> :exclamation: For instance don't use this API in a test environment. The API will go down for maintenance, will throttle under 'high' load, and so on. This will impact the "test" results.
+> :exclamation: The API should not be used for large amouts of data or when high availability is required. The API could go down for maintenance, will throttle under 'high' load, and so on. 
 >
 > :heavy_check_mark: For implementing these CRSs and transformations in a test environment either:
 >
